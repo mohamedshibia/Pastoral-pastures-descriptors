@@ -17,8 +17,8 @@ airange <- seq(500,2500,by=100) #range in the sequence; in our case it'll start 
 
 
 #read data, clean data (remove 0 values) and sort data
-x <- readGDAL(list[list_num])$band3
-y <- readGDAL(list[list_num])$band4
+x <- readGDAL(list[list_num])$band3 #Red
+y <- readGDAL(list[list_num])$band4 #NIR
 
 ysub <- subset(y, y > 0 & x > 0 )
 xsub <- subset(x, y > 0 & x > 0 )
@@ -26,24 +26,19 @@ xsub <- subset(x, y > 0 & x > 0 )
 sortx <- sort(xsub, index.return=TRUE)
 sorty <- ysub[sortx[[2]]]
 
-
 min(xsub)
 max(xsub)
-
 
 # adapt boundaries and intervals according to value range
 
 length(airange)
-
 
 xsortvalue <- sortx[[1]]
 
 xmedian <- c()
 y005 <- c()
 
-
 # calculation of quantiles
-
 
 for (i in 1:(length(airange)-1)) {
 	xmedian[i] <-median(xsortvalue[(xsortvalue > airange[i] & xsortvalue < airange[i+1])], na.rm = TRUE)
